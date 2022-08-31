@@ -1,5 +1,5 @@
 const express = require('express');
-const { addEnvelopes, getAllEnv, getEnvById, updateEnv } = require('./db');
+const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget } = require('./db');
 const app = require('./server')
 
 const apiRouter = express.Router();
@@ -60,6 +60,10 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
         noQueriesError.status = 400;
         next(noQueriesError)
     }
+})
+
+envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res, next) => {
+    res.send({result: addToBudget(req.envId, Number(req.params.amountToAdd))});
 })
 
 module.exports = {
