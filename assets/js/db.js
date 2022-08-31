@@ -112,7 +112,7 @@ const addToBudget = (envId, amountToAdd) => {
 }
 
 const subFromBudget = (envId, amountToRemove) => {
-    const index = envelopes.data.findIndex(element => element.id === envId);
+    const index = doesIdExist(envId);
     if (index >= 0) {
         envelopes.data[index].budget -= amountToRemove;
         return envelopes.data[index]
@@ -122,7 +122,7 @@ const subFromBudget = (envId, amountToRemove) => {
 }
 
 const deleteEnv = envId => {
-    const index = envelopes.data.findIndex(element => element.id === envId);
+    const index = doesIdExist(envId);
     if (index >= 0) {
         envelopes.data.splice(index, 1);
         return true;
