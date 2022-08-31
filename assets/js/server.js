@@ -9,6 +9,15 @@ const PORT = process.env.PORT || 3000;
 // Monting apiRouter at /pb path which will serve as my base path
 app.use('/pb', apiRouter)
 
+// Require some third party modules
+const cors = require('cors');
+app.use(cors());
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json())
+
+const morgan = require('morgan');
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     res.send('Hello, World');
