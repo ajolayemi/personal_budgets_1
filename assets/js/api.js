@@ -1,5 +1,5 @@
 const express = require('express');
-const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget, subFromBudget } = require('./db');
+const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget, subFromBudget, deleteEnv } = require('./db');
 const app = require('./server')
 
 const apiRouter = express.Router();
@@ -19,7 +19,6 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
 })
 
 const envIdValidator = (req, res, next) => {
-    console.log('Calling')
     const result = getEnvById(req.envId);
     if (result) {
         req.filterRes = result;
@@ -94,6 +93,11 @@ envelopeRouter.post('/:envelopeId/sub/:amountToSub', (req, res, next) => {
         next(balanceError);
         }
     })
+
+
+envelopeRouter.delete('/:envelopeId', envIdValidator, (req, res) => {
+    res.status(201).send({result: deleteEnv(req.envId)})
+})
 
 module.exports = {
     apiRouter
