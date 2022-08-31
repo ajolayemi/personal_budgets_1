@@ -27,18 +27,22 @@ titles.forEach(title => {
 // Verify envope body
 const verifyEnv = toVerify => {
     if (!toVerify.hasOwnProperty('title') || toVerify.title === "") {
-        throw new Error('Title must be provided for envelope');
+        throw new Error(
+            JSON.stringify({'error': 'Title must be provided for envelope'}));
     };
 
     if (!toVerify.hasOwnProperty('budget') || toVerify.budget === "") {
-        throw new Error('Budget must be provided for envelope');
+        throw new Error(
+            JSON.stringify({'error': 'Budget must be provided for envelope'}));
     }
 
     if (!toVerify.hasOwnProperty('description') || toVerify.description === "") {
-        throw new Error('A description must be provided');
+        throw new Error(
+            JSON.stringify({'error': 'A description must be provided'}));
     }
     if (isNaN(Number(toVerify.budget))) {
-        throw new Error('Budget must be a number');
+        throw new Error(
+            JSON.stringify({'error': 'Budget must be a number'}));
     };
 
     return true; 
@@ -47,7 +51,8 @@ const verifyEnv = toVerify => {
 // Checks to see if there are envelopes in database
 const checkEnvelopes = () => {
     if (envelopes.data.length === 0) {
-        throw new Error('No envelopes in database!');
+        throw new Error(
+            JSON.stringify({'error': 'No envelopes in database!'}));
     } 
     return true;
 }
