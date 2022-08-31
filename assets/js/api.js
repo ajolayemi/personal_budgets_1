@@ -32,20 +32,20 @@ const envIdValidator = (req, res, next) => {
 }
 
 envelopeRouter.get('/', (req, res) => {
-    res.send(getAllEnv());
+    res.send({result: getAllEnv()});
 })
 
 envelopeRouter.post('/', (req, res, next) => {
     try {
         const added = addEnvelopes(req.body);
-        res.send(added)
+        res.send({result: added})
     } catch (e) {
         next(e)
     }
 })
 
 envelopeRouter.get('/:envelopeId', envIdValidator, (req, res) => {
-    res.send(getEnvById(req.envId));
+    res.send({result: getEnvById(req.envId)});
 })
 
 envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
@@ -53,7 +53,7 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
     const queries = req.query;
     if (Object.keys(queries).length > 0) {
         const updatedData = updateEnv(Object.assign({id: matchedEnvelope.id}, queries))
-        res.send(updatedData);
+        res.send({result: updatedData});
     } else {
         const noQueriesError = new Error(JSON.stringify({
             'error': 'Provide at least a query key value between title, description and budget' }));
