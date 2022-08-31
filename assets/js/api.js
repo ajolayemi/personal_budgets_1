@@ -1,6 +1,6 @@
 const express = require('express');
-const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget, subFromBudget, deleteEnv, doesIdExist } = require('./db');
-const app = require('./server')
+const { addEnvelopes, getAllEnv, getEnvById, updateEnv, 
+    addToBudget, subFromBudget, deleteEnv, doesIdExist } = require('./db');
 
 const apiRouter = express.Router();
 const envelopeRouter = express.Router({mergeParams: true});
@@ -83,7 +83,7 @@ const envIdValidator = (req, res, next) => {
     } else {
         const idError = new Error(JSON.stringify({'error': `ID: ${req.envId} not found in database`}));
         idError.status = 404;
-        next(idError)
+        next(idError);
     }
 }
 
@@ -94,9 +94,9 @@ envelopeRouter.get('/', (req, res) => {
 envelopeRouter.post('/', (req, res, next) => {
     try {
         const added = addEnvelopes(req.body);
-        res.status(201).send({result: added})
+        res.status(201).send({result: added});
     } catch (e) {
-        next(e)
+        next(e);
     }
 })
 
@@ -114,7 +114,7 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
         const noQueriesError = new Error(JSON.stringify({
             'error': 'Provide at least a query key value between title, description and budget' }));
         noQueriesError.status = 400;
-        next(noQueriesError)
+        next(noQueriesError);
     }
 })
 
@@ -135,7 +135,7 @@ envelopeRouter.post('/:envelopeId/sub/:amountToSub', (req, res, next) => {
             JSON.stringify({error : 'Please provide amount to subtract as a number'})
         )
         valError.status = 400;
-        return next(valError)
+        return next(valError);
     }
 
     if (currentVal.budget >= Number(req.params.amountToSub)) {
@@ -153,7 +153,7 @@ envelopeRouter.post('/:envelopeId/sub/:amountToSub', (req, res, next) => {
 
 
 envelopeRouter.delete('/:envelopeId', envIdValidator, (req, res) => {
-    res.status(201).send({result: deleteEnv(req.envId)})
+    res.status(201).send({result: deleteEnv(req.envId)});
 })
 
 envelopeRouter.post('/transfer/:from/:to/:amount', (req, res) => {
@@ -164,7 +164,7 @@ envelopeRouter.post('/transfer/:from/:to/:amount', (req, res) => {
             senderNew: subFromSender,
             receiverNew: addToReceiver
         }}
-    )
+    );
 })
 
 module.exports = {
