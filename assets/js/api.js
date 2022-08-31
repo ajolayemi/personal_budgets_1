@@ -12,7 +12,7 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
         req.envId = providedId;
         next();
     } else {
-        const invalidArgError = new Error('Provided envelope id must be a number');
+        const invalidArgError = new Error(JSON.stringify({result: 'Provided envelope id must be a number'}));
         invalidArgError.status = 400;
         next(invalidArgError);
     }
