@@ -35,6 +35,15 @@ const addEnvelopes = dataToAdd => {
     }
 } 
 
+const getAllEnv = () => {
+    if (envelopes.data.length > 0) {
+        return envelopes.data;
+    } else {
+        return 'No envelopes has been created yet!';
+    }
+}
+
 module.exports = {
     addEnvelopes,
+    getAllEnv,
 }
