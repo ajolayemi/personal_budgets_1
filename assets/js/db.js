@@ -97,9 +97,20 @@ const updateEnv = newData => {
         return null;
     }
 }
+
+const addToBudget = (envId, newBudget) => {
+    const index = envelopes.data.findIndex(element => element.id === envId);
+    if (index >= 0) {
+        envelopes.data[index].budget += newBudget;
+        return envelopes.data[index]
+    } else {
+        return null;
+    }
+}
 module.exports = {
     addEnvelopes,
     getAllEnv,
     getEnvById,
     updateEnv,
+    addToBudget,
 }
