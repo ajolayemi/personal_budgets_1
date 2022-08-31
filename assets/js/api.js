@@ -25,7 +25,7 @@ const envIdValidator = (req, res, next) => {
         req.filterRes = result;
         next();
     } else {
-        const idError = new Error(`ID: ${req.envId} not found in database`);
+        const idError = new Error(JSON.stringify({result: `ID: ${req.envId} not found in database`}));
         idError.status = 404;
         next(idError)
     }
