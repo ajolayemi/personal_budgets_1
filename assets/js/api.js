@@ -3,14 +3,15 @@ const { addEnvelopes, getAllEnv } = require('./db');
 const app = require('./server')
 
 const apiRouter = express.Router();
+const envelopeRouter = express.Router({mergeParams: true});
+apiRouter.use('/envelopes', envelopeRouter);
 
 
-
-apiRouter.get('/envelopes', (req, res) => {
+envelopeRouter.get('/', (req, res) => {
     res.send(getAllEnv());
 })
 
-apiRouter.post('/envelopes', (req, res, next) => {
+envelopeRouter.post('/', (req, res, next) => {
     try {
         const added = addEnvelopes(req.body);
         res.send(added)
