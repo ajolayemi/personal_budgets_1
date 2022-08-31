@@ -2,9 +2,10 @@
   "name": "personal_budgets_1",
   "version": "1.0.0",
   "description": "A project for Codecademy with the aim of helping in managing personal budget",
-  "main": "./assets/js/server.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./assets/js/server.js"
   },
   "author": "Kehinde Jolayemi",
   "license": "ISC",
