@@ -55,7 +55,7 @@ const checkEnvelopes = () => {
 // Creates new envelopes
 const addEnvelopes = dataToAdd => {
     if (verifyEnv(dataToAdd)) {
-        dataToAdd['id'] = envelopes.nextId += 1;
+        dataToAdd['id'] = envelopes.nextId ++ ;
         envelopes.data.push(dataToAdd);
         return envelopes.data[envelopes.data.length - 1]
     } else {
