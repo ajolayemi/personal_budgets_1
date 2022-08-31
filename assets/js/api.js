@@ -19,6 +19,17 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
 })
 
 
+const envIdValidator = (req, res, next) => {
+    const result = getEnvById(req.envId);
+    if (result) {
+        req.filterRes = result;
+    } else {
+        const idError = new Error(`ID: ${req.envId} not found in database`);
+        idError.status = 404;
+        next(idError)
+    }
+}
+
 envelopeRouter.get('/', (req, res) => {
     res.send(getAllEnv());
 })
@@ -32,15 +43,8 @@ envelopeRouter.post('/', (req, res, next) => {
     }
 })
 
-envelopeRouter.get('/:envelopeId', (req, res, next) => {
-    const result = getEnvById(req.envId);
-    if (result) {
-        res.send(result)
-    } else {
-        const idError = new Error(`ID: ${req.envId} not found in database`);
-        idError.status = 404;
-        next(idError)
-    }
+envelopeRouter.get('/:envelopeId', envIdValidator, (req, res, next) => {
+    res.send(getEnvById(req.envId));
 })
 
 module.exports = {
