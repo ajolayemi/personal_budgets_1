@@ -19,8 +19,4 @@ app.use(bodyParser.json())
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
-app.get('/', (req, res) => {
-    res.send('Hello, World');
-})
-
 app.listen(PORT, () => console.log(`Started listening at PORT: ${PORT}`));
