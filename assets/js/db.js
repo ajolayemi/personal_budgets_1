@@ -82,8 +82,19 @@ const getEnvById = idToUse => {
     }
 }
 
+
+const updateEnv = newData => {
+    const index = envelopes.data.findIndex(element => element.id === newData.id);
+    if (index >= 0) {
+        envelopes.data.splice(index, 1, newData);
+        return envelopes.data[index]
+    } else {
+        return null;
+    }
+}
 module.exports = {
     addEnvelopes,
     getAllEnv,
     getEnvById,
+    updateEnv,
 }
