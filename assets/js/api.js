@@ -1,5 +1,5 @@
 const express = require('express');
-const { addEnvelopes, getAllEnv, getEnvById } = require('./db');
+const { addEnvelopes, getAllEnv, getEnvById, updateEnv } = require('./db');
 const app = require('./server')
 
 const apiRouter = express.Router();
@@ -23,6 +23,7 @@ const envIdValidator = (req, res, next) => {
     const result = getEnvById(req.envId);
     if (result) {
         req.filterRes = result;
+        next();
     } else {
         const idError = new Error(`ID: ${req.envId} not found in database`);
         idError.status = 404;
@@ -45,6 +46,17 @@ envelopeRouter.post('/', (req, res, next) => {
 
 envelopeRouter.get('/:envelopeId', envIdValidator, (req, res, next) => {
     res.send(getEnvById(req.envId));
+})
+
+envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
+    const matchedEnvelope = getEnvById(req.envId);
+    const queries = req.query;
+    if (Object.keys(queries).length > 0) {
+        const updatedData = updateEnv(Object.assign({id: matchedEnvelope.id}, queries))
+        res.send(updatedData);
+    } else {
+        res.status(204).send()
+    }
 })
 
 module.exports = {
