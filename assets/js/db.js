@@ -47,11 +47,23 @@ const getAllEnv = () => {
     if (checkEnvelopes) {
         return envelopes.data;
     } else {
-        return 'No envelopes has been created yet!';
+        return null;
+    }
+}
+
+const getEnvById = idToUse => {
+    if (checkEnvelopes) {
+        const dataToReturn = envelopes.data.find(env => env.id === idToUse);
+        if (dataToReturn) {
+            return dataToReturn;
+        } else {
+            return null;
+        }
     }
 }
 
 module.exports = {
     addEnvelopes,
     getAllEnv,
+    getEnvById,
 }
