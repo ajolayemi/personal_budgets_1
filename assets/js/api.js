@@ -118,11 +118,11 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
     }
 })
 
-envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res) => {
+envelopeRouter.put('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res) => {
     res.send({result: addToBudget(req.envId, Number(req.params.amountToAdd))});
 })
 
-envelopeRouter.post('/:envelopeId/sub/:amountToSub', (req, res, next) => {
+envelopeRouter.put('/:envelopeId/sub/:amountToSub', (req, res, next) => {
     const currentVal = getEnvById(req.envId);
     if (!currentVal) {
         const idError = new Error(JSON.stringify({'error': `ID: ${req.envId} not found in database`}));
@@ -156,7 +156,7 @@ envelopeRouter.delete('/:envelopeId', envIdValidator, (req, res) => {
     res.status(201).send({result: deleteEnv(req.envId)});
 })
 
-envelopeRouter.post('/transfer/:from/:to/:amount', (req, res) => {
+envelopeRouter.put('/transfer/:from/:to/:amount', (req, res) => {
     const addToReceiver = addToBudget(req.receiverId, req.transferAmount);
     const subFromSender = subFromBudget(req.senderId, req.transferAmount);
     res.send(
