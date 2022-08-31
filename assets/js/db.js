@@ -98,19 +98,31 @@ const updateEnv = newData => {
     }
 }
 
-const addToBudget = (envId, newBudget) => {
+const addToBudget = (envId, amountToAdd) => {
     const index = envelopes.data.findIndex(element => element.id === envId);
     if (index >= 0) {
-        envelopes.data[index].budget += newBudget;
+        envelopes.data[index].budget += amountToAdd;
         return envelopes.data[index]
     } else {
         return null;
     }
 }
+
+const subFromBudget = (envId, amountToRemove) => {
+    const index = envelopes.data.findIndex(element => element.id === envId);
+    if (index >= 0) {
+        envelopes.data[index].budget -= amountToRemove;
+        return envelopes.data[index]
+    } else {
+        return null;
+    }
+}
+
 module.exports = {
     addEnvelopes,
     getAllEnv,
     getEnvById,
     updateEnv,
     addToBudget,
+    subFromBudget,
 }
