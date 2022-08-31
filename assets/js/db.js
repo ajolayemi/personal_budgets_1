@@ -25,7 +25,7 @@ titles.forEach(title => {
 })
 
 
-const doesIdExist = idToCheck => envelopes.findIndex(element => element.id === idToCheck);
+const doesIdExist = idToCheck => envelopes.data.findIndex(element => element.id === idToCheck);
 
 // Verify envope body
 const verifyEnv = toVerify => {
