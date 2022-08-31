@@ -13,7 +13,10 @@ const verifyEnv = toVerify => {
     if (!toVerify.hasOwnProperty('budget') || toVerify.budget === "") {
         throw new Error('Budget must be provided for envelope');
     }
-    
+
+    if (!toVerify.hasOwnProperty('description') || toVerify.description === "") {
+        throw new Error('A description must be provided');
+    }
     if (isNaN(Number(toVerify.budget))) {
         throw new Error('Budget must be a number');
     };
