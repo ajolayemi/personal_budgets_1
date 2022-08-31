@@ -68,6 +68,7 @@ envelopeRouter.param('from', (req, res, next) => {
         } else {
             req.senderId = sender;
             req.receiverId = receiver;
+            req.transferAmount = amount;
             next();
         }
 
@@ -156,7 +157,14 @@ envelopeRouter.delete('/:envelopeId', envIdValidator, (req, res) => {
 })
 
 envelopeRouter.post('/transfer/:from/:to/:amount', (req, res) => {
-    res.send(req.ress)
+    const addToReceiver = addToBudget(req.receiverId, req.transferAmount);
+    const subFromSender = subFromBudget(req.senderId, req.transferAmount);
+    res.send(
+        {result: {
+            senderNew: subFromSender,
+            receiverNew: addToReceiver
+        }}
+    )
 })
 
 module.exports = {
