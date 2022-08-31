@@ -1,16 +1,28 @@
 const envelopes =  {
     data: [],
-    nextId: 0,
+    nextId: 1,
 }
 
 const titles = ['Food', 'University', 'Clothing', 'Party', 'Travel'];
-const budgets = Array(20).fill(1).map((_, i) => i + Math.floor(Math.random() * 1000));
+const budgets = Array(20).fill(1).map((_, i) => i + Math.floor(Math.random() * 10000));
 const descriptions = [
     'This will be the last time', 
     'Need to spend it wisely', 
     'While waiting for my next salary',
     'Will I be able to maintain it',
     'Don\'t tocuch it!']
+
+// Randomly create envlopes
+titles.forEach(title => {
+    const randomBudget = budgets[Math.floor(Math.random() * budgets.length)];
+    const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+    envelopes.data.push({
+        id: envelopes.nextId ++,
+        title: title,
+        budget: randomBudget,
+        description: randomDescription
+    })
+})
 
 // Verify envope body
 const verifyEnv = toVerify => {
