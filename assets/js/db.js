@@ -1,7 +1,7 @@
 const envelopes =  {
     data: [],
     nextId: 1,
-}
+};
 
 const titles = ['Food', 'University', 'Clothing', 'Party', 'Travel'];
 const budgets = Array(20).fill(1).map((_, i) => i + Math.floor(Math.random() * 10000));
@@ -10,7 +10,7 @@ const descriptions = [
     'Need to spend it wisely', 
     'While waiting for my next salary',
     'Will I be able to maintain it',
-    'Don\'t tocuch it!']
+    'Don\'t tocuch it!'];
 
 // Randomly create envlopes
 titles.forEach(title => {
@@ -21,7 +21,7 @@ titles.forEach(title => {
         title: title,
         budget: randomBudget,
         description: randomDescription
-    })
+    });
 })
 
 
@@ -65,7 +65,7 @@ const addEnvelopes = dataToAdd => {
     if (verifyEnv(dataToAdd)) {
         const idObj = {id: envelopes.nextId ++}
         envelopes.data.push(Object.assign(idObj, dataToAdd));
-        return envelopes.data[envelopes.data.length - 1]
+        return envelopes.data[envelopes.data.length - 1];
     } else {
         return null;
     }
@@ -95,7 +95,7 @@ const updateEnv = newData => {
     const index = doesIdExist(newData.id);
     if (index >= 0) {
         envelopes.data.splice(index, 1, newData);
-        return envelopes.data[index]
+        return envelopes.data[index];
     } else {
         return null;
     }
@@ -105,7 +105,7 @@ const addToBudget = (envId, amountToAdd) => {
     const index = doesIdExist(envId);
     if (index >= 0) {
         envelopes.data[index].budget += amountToAdd;
-        return envelopes.data[index]
+        return envelopes.data[index];
     } else {
         return null;
     }
@@ -115,7 +115,7 @@ const subFromBudget = (envId, amountToRemove) => {
     const index = doesIdExist(envId);
     if (index >= 0) {
         envelopes.data[index].budget -= amountToRemove;
-        return envelopes.data[index]
+        return envelopes.data[index];
     } else {
         return null;
     }
@@ -140,4 +140,4 @@ module.exports = {
     subFromBudget,
     deleteEnv,
     doesIdExist,
-}
+};
