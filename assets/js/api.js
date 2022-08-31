@@ -12,7 +12,7 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
         req.envId = providedId;
         next();
     } else {
-        const invalidArgError = new Error(JSON.stringify({result: 'Provided envelope id must be a number'}));
+        const invalidArgError = new Error(JSON.stringify({'error': 'Provided envelope id must be a number'}));
         invalidArgError.status = 400;
         next(invalidArgError);
     }
@@ -25,7 +25,7 @@ const envIdValidator = (req, res, next) => {
         req.filterRes = result;
         next();
     } else {
-        const idError = new Error(JSON.stringify({result: `ID: ${req.envId} not found in database`}));
+        const idError = new Error(JSON.stringify({'error': `ID: ${req.envId} not found in database`}));
         idError.status = 404;
         next(idError)
     }
@@ -56,7 +56,7 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
         res.send(updatedData);
     } else {
         const noQueriesError = new Error(JSON.stringify({
-            result: 'Provide at least a query key value between title, description and budget' }));
+            'error': 'Provide at least a query key value between title, description and budget' }));
         noQueriesError.status = 400;
         next(noQueriesError)
     }
