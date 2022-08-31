@@ -118,6 +118,16 @@ const subFromBudget = (envId, amountToRemove) => {
     }
 }
 
+const deleteEnv = envId => {
+    const index = envelopes.data.findIndex(element => element.id === envId);
+    if (index >= 0) {
+        envelopes.data.splice(index, 1);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 module.exports = {
     addEnvelopes,
     getAllEnv,
@@ -125,4 +135,5 @@ module.exports = {
     updateEnv,
     addToBudget,
     subFromBudget,
+    deleteEnv,
 }
