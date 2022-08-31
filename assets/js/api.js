@@ -18,23 +18,8 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
     }
 })
 
-envelopeRouter.param('amountToSub', (req, res, next, toSub) => {
-    const currentVal = getEnvById(req.envId);
-    if (currentVal.budget >= Number(toSub)) {
-        req.toRemove = toSub;
-        next();
-    } else {
-        let balanceError = new Error(
-            JSON.stringify(`Your current balance of €${currentVal.budget} for ${currentVal.title} 
-            envelope is not sufficient.`)
-        );
-        balanceError.status = 400;
-        next(balanceError);
-    }
-})
-
-
 const envIdValidator = (req, res, next) => {
+    console.log('Calling')
     const result = getEnvById(req.envId);
     if (result) {
         req.filterRes = result;
@@ -81,9 +66,34 @@ envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res) 
     res.send({result: addToBudget(req.envId, Number(req.params.amountToAdd))});
 })
 
-envelopeRouter.post('/:envelopeId/sub/:amountToSub', envIdValidator, (req, res) => {
-    res.send({result: subFromBudget(req.envId, req.toRemove)});
-})
+envelopeRouter.post('/:envelopeId/sub/:amountToSub', (req, res, next) => {
+    const currentVal = getEnvById(req.envId);
+    if (!currentVal) {
+        const idError = new Error(JSON.stringify({'error': `ID: ${req.envId} not found in database`}));
+        idError.status = 404;
+        return next(idError);
+    }
+
+    if (isNaN(Number(req.params.amountToSub))) {
+        const valError = new Error(
+            JSON.stringify({error : 'Please provide amount to subtract as a number'})
+        )
+        valError.status = 400;
+        return next(valError)
+    }
+
+    if (currentVal.budget >= Number(req.params.amountToSub)) {
+        res.send({result: subFromBudget(req.envId, req.params.amountToSub)});
+        next();
+    } else {
+        let balanceError = new Error(
+            JSON.stringify({error: `Your current balance of €${currentVal.budget} for ${currentVal.title} \
+            envelope is not sufficient.`})
+            );
+        balanceError.status = 400;
+        next(balanceError);
+        }
+    })
 
 module.exports = {
     apiRouter
