@@ -102,7 +102,7 @@ const updateEnv = newData => {
 }
 
 const addToBudget = (envId, amountToAdd) => {
-    const index = envelopes.data.findIndex(element => element.id === envId);
+    const index = doesIdExist(envId);
     if (index >= 0) {
         envelopes.data[index].budget += amountToAdd;
         return envelopes.data[index]
