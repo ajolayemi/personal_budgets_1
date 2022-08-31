@@ -62,8 +62,12 @@ envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
     }
 })
 
-envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res, next) => {
+envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res) => {
     res.send({result: addToBudget(req.envId, Number(req.params.amountToAdd))});
+})
+
+envelopeRouter.post('/:envelopeId/sub/:amountToSub', envIdValidator, (req, res, next) => {
+    res.send('Coming soon')
 })
 
 module.exports = {
