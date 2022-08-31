@@ -1,0 +1,14 @@
+{
+  "name": "personal_budgets_1",
+  "version": "1.0.0",
+  "description": "A project for Codecademy with the aim of helping in managing personal budget",
+  "main": "./assets/js/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kehinde Jolayemi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
