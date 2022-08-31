@@ -139,4 +139,5 @@ module.exports = {
     addToBudget,
     subFromBudget,
     deleteEnv,
+    doesIdExist,
 }
