@@ -1,5 +1,5 @@
 const express = require('express');
-const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget } = require('./db');
+const { addEnvelopes, getAllEnv, getEnvById, updateEnv, addToBudget, subFromBudget } = require('./db');
 const app = require('./server')
 
 const apiRouter = express.Router();
@@ -15,6 +15,21 @@ envelopeRouter.param('envelopeId', (req, res, next, id) => {
         const invalidArgError = new Error(JSON.stringify({'error': 'Provided envelope id must be a number'}));
         invalidArgError.status = 400;
         next(invalidArgError);
+    }
+})
+
+envelopeRouter.param('amountToSub', (req, res, next, toSub) => {
+    const currentVal = getEnvById(req.envId);
+    if (currentVal.budget >= Number(toSub)) {
+        req.toRemove = toSub;
+        next();
+    } else {
+        let balanceError = new Error(
+            JSON.stringify(`Your current balance of €${currentVal.budget} for ${currentVal.title} 
+            envelope is not sufficient.`)
+        );
+        balanceError.status = 400;
+        next(balanceError);
     }
 })
 
@@ -38,7 +53,7 @@ envelopeRouter.get('/', (req, res) => {
 envelopeRouter.post('/', (req, res, next) => {
     try {
         const added = addEnvelopes(req.body);
-        res.send({result: added})
+        res.status(201).send({result: added})
     } catch (e) {
         next(e)
     }
@@ -66,8 +81,8 @@ envelopeRouter.post('/:envelopeId/add/:amountToAdd', envIdValidator, (req, res) 
     res.send({result: addToBudget(req.envId, Number(req.params.amountToAdd))});
 })
 
-envelopeRouter.post('/:envelopeId/sub/:amountToSub', envIdValidator, (req, res, next) => {
-    res.send('Coming soon')
+envelopeRouter.post('/:envelopeId/sub/:amountToSub', envIdValidator, (req, res) => {
+    res.send({result: subFromBudget(req.envId, req.toRemove)});
 })
 
 module.exports = {
