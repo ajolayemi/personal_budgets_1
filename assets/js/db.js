@@ -24,6 +24,14 @@ const verifyEnv = toVerify => {
     return true; 
 }
 
+// Checks to see if there are envelopes in database
+const checkEnvelopes = () => {
+    if (envelopes.data.length === 0) {
+        throw new Error('No envelopes in database!');
+    } 
+    return true;
+}
+
 // Creates new envelopes
 const addEnvelopes = dataToAdd => {
     if (verifyEnv(dataToAdd)) {
@@ -36,7 +44,7 @@ const addEnvelopes = dataToAdd => {
 } 
 
 const getAllEnv = () => {
-    if (envelopes.data.length > 0) {
+    if (checkEnvelopes) {
         return envelopes.data;
     } else {
         return 'No envelopes has been created yet!';
