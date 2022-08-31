@@ -44,18 +44,18 @@ envelopeRouter.post('/', (req, res, next) => {
     }
 })
 
-envelopeRouter.get('/:envelopeId', envIdValidator, (req, res, next) => {
+envelopeRouter.get('/:envelopeId', envIdValidator, (req, res) => {
     res.send(getEnvById(req.envId));
 })
 
-envelopeRouter.put('/:envelopeId', envIdValidator, (req, res, next) => {
+envelopeRouter.put('/:envelopeId', envIdValidator, (req, res) => {
     const matchedEnvelope = getEnvById(req.envId);
     const queries = req.query;
     if (Object.keys(queries).length > 0) {
         const updatedData = updateEnv(Object.assign({id: matchedEnvelope.id}, queries))
         res.send(updatedData);
     } else {
-        res.status(204).send()
+        res.status(204).send('Bad request')
     }
 })
 
