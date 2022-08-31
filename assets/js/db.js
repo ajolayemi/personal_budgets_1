@@ -3,6 +3,14 @@ const envelopes =  {
     nextId: 0,
 }
 
+const titles = ['Food', 'University', 'Clothing', 'Party', 'Travel'];
+const budgets = Array(20).fill(1).map((_, i) => i + Math.floor(Math.random() * 1000));
+const descriptions = [
+    'This will be the last time', 
+    'Need to spend it wisely', 
+    'While waiting for my next salary',
+    'Will I be able to maintain it',
+    'Don\'t tocuch it!']
 
 // Verify envope body
 const verifyEnv = toVerify => {
